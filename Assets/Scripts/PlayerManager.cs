@@ -6,16 +6,19 @@ public class PlayerManager : MonoBehaviour {
     public float playerY;
     public float playerWidth;
     public float borderWidth;
+    public GameObject ballPrefab;
 
     private Rigidbody2D rb;
     private Vector3 mouseScreenPosition;
     private Vector3 mousePosition;
     private Vector3 targetPosition;
+    private GameObject myBall;
 
     void Start() {
         rb = GetComponent<Rigidbody2D>();
         targetPosition = new Vector3(0, playerY, 0);
         rb.position = targetPosition;
+        instantiateBall();
     }
 
     void Update() {
@@ -37,5 +40,15 @@ public class PlayerManager : MonoBehaviour {
         }
 
         rb.position = targetPosition;
+
+        if (Input.GetMouseButtonUp(0)) {
+            myBall.GetComponent<BallManager>().setStart();
+            Debug.Log("called setstart");
+        }
+    }
+
+    private void instantiateBall() {
+        myBall = Instantiate(ballPrefab);
+        myBall.transform.position = new Vector2(rb.position.x, rb.position.y + 0.7f);
     }
 }
