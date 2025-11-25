@@ -42,7 +42,11 @@ public class PlayerManager : MonoBehaviour {
 
         rb.position = targetPosition;
 
-        if (Input.GetMouseButtonUp(0)) {
+        if (myBall == null && GameManager.instance.lives > 0) {
+            instantiateBall();
+        }
+
+        if (Input.GetMouseButtonUp(0) && myBall != null) {
             myBall.transform.SetParent(null, true);
             myBall.GetComponent<BallManager>().setStart();
             Debug.Log("called setstart");

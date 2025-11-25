@@ -1,3 +1,4 @@
+using System.Data;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
@@ -36,6 +37,7 @@ public class BallManager : MonoBehaviour {
         Vector2 normal = collision.GetContact(0).normal;
         //reflects ball off of the borders
         angle = Vector2.Reflect(angle, normal);
+
         if (collision.gameObject.CompareTag("Player")) {
             PlayerManager player = collision.gameObject.GetComponent<PlayerManager>();
             float playerX = player.GetComponent<Rigidbody2D>().position.x;
@@ -47,9 +49,23 @@ public class BallManager : MonoBehaviour {
             //normalizes it, so the vector has a length of 1 before applying ballspeed
             angle = new Vector2(location, 1).normalized;
         }
+
+        float minimumYVelocity = 0.3f;
+        if (Mathf.Abs(angle.y) < minimumYVelocity) {
+            //changes the y component of the vector to the minimum velocity if it is too low
+            //keeps the sign of angle.y intact
+            angle.y = Mathf.Sign(angle.y) * minimumYVelocity;
+            //renormalizes the vector to make sure the ball doesn't move at the wrong speed
+            angle = angle.normalized;
+        }
+
         if (collision.gameObject.CompareTag("brick")) {
             BrickManager brick = collision.gameObject.GetComponent<BrickManager>();
             brick.hit();
+        }
+        if (collision.gameObject.CompareTag("borderbottom")) {
+            GameManager.instance.lostBall();
+            Destroy(this.gameObject);
         }
     }
 }
