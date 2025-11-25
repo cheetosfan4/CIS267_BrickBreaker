@@ -6,6 +6,7 @@ public class PlayerManager : MonoBehaviour {
     public float playerY;
     public float playerWidth;
     public float borderWidth;
+    public float lives;
     public GameObject ballPrefab;
 
     private Rigidbody2D rb;
@@ -42,6 +43,7 @@ public class PlayerManager : MonoBehaviour {
         rb.position = targetPosition;
 
         if (Input.GetMouseButtonUp(0)) {
+            myBall.transform.SetParent(null, true);
             myBall.GetComponent<BallManager>().setStart();
             Debug.Log("called setstart");
         }
@@ -50,5 +52,6 @@ public class PlayerManager : MonoBehaviour {
     private void instantiateBall() {
         myBall = Instantiate(ballPrefab);
         myBall.transform.position = new Vector2(rb.position.x, rb.position.y + 0.7f);
+        myBall.transform.SetParent(this.gameObject.transform);
     }
 }

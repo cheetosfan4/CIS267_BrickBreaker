@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 3
   tags:
   - border
+  - ball
+  - brick
   layers:
   - Default
   - TransparentFX
@@ -50,6 +52,9 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 1418432827
+    locked: 0
+  - name: Balls
+    uniqueID: 3205697569
     locked: 0
   m_RenderingLayers:
   - Default

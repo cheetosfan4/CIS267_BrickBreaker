@@ -9,6 +9,9 @@ public class BallManager : MonoBehaviour {
 
     void Awake() {
         started = false;
+    }
+
+    private void Start() {
         angle = Vector2.zero;
         angle.y = 1;
         rb = GetComponent<Rigidbody2D>();
@@ -17,6 +20,10 @@ public class BallManager : MonoBehaviour {
     void Update() {
         if (started) {
             rb.linearVelocity = angle * ballSpeed;
+            rb.rotation += rb.linearVelocityX/-10;
+        }
+        else {
+            rb.position = new Vector2(transform.parent.position.x, transform.parent.position.y + 0.7f);
         }
     }
 
@@ -39,6 +46,10 @@ public class BallManager : MonoBehaviour {
             //creates new vector2 based on the hit location
             //normalizes it, so the vector has a length of 1 before applying ballspeed
             angle = new Vector2(location, 1).normalized;
+        }
+        if (collision.gameObject.CompareTag("brick")) {
+            BrickManager brick = collision.gameObject.GetComponent<BrickManager>();
+            brick.hit();
         }
     }
 }
