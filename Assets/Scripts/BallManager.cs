@@ -4,16 +4,21 @@ using UnityEngine;
 
 public class BallManager : MonoBehaviour {
     private bool started;
+    public bool isGhost;
     private Vector2 angle;
     public float ballSpeed;
     public float ballHoldDistance;
     private Rigidbody2D rb;
+    private SpriteRenderer sr;
+    private float ghostDistance;
 
     void Awake() {
+        sr = GetComponentInChildren<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         angle = Vector2.zero;
         angle.y = 1;
         started = false;
+        ghostDistance = 0;
     }
 
     private void Start() {
@@ -25,13 +30,29 @@ public class BallManager : MonoBehaviour {
             rb.rotation += rb.linearVelocityX/-10;
         }
         else {
-            rb.position = new Vector2(transform.parent.position.x, transform.parent.position.y + ballHoldDistance);
+            rb.position = new Vector2(transform.parent.position.x + ghostDistance, transform.parent.position.y + ballHoldDistance);
         }
     }
 
     public void setStart() {
         started = true;
-        Debug.Log("started set to true");
+        Debug.Log("ball started set to true");
+    }
+
+    public bool hasStarted() {
+        return started;
+    }
+
+    public void setAngle(Vector2 a) {
+        angle = a;
+    }
+
+    public Vector2 getAngle() {
+        return angle;
+    }
+
+    public void setGhostDistance(float gd) {
+        ghostDistance = gd;
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
@@ -66,7 +87,9 @@ public class BallManager : MonoBehaviour {
                 brick.hit();
             }
             if (collision.gameObject.CompareTag("borderbottom")) {
-                GameManager.instance.lostBall();
+                if (!isGhost) {
+                    GameManager.instance.decrementLives();
+                }
                 Destroy(this.gameObject);
             }
         }

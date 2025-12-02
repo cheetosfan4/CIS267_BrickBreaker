@@ -1,16 +1,16 @@
 fileFormatVersion: 2
-guid: 772bf7fd48062b84b91baff91d445699
+guid: 949211d7fe3a0e14b94af048d0251f1c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7180641765667264733
-    second: ballsoverlay1280_0
+      213: 5396062740172690609
+    second: ghostballsoverlay_0
   - first:
-      213: -910524144810233741
-    second: ballsoverlay1280_1
+      213: 8477340313601272540
+    second: ghostballsoverlay_1
   - first:
-      213: 5363480119274976649
-    second: ballsoverlay1280_2
+      213: 5421226286664492579
+    second: ghostballsoverlay_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -119,7 +119,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ballsoverlay1280_0
+      name: ghostballsoverlay_0
       rect:
         serializedVersion: 2
         x: 1
@@ -134,14 +134,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 327a11adb5c395c90800000000000000
-      internalID: -7180641765667264733
+      spriteID: 1b4d6bdf87aa2ea40800000000000000
+      internalID: 5396062740172690609
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ballsoverlay1280_1
+      name: ghostballsoverlay_1
       rect:
         serializedVersion: 2
         x: 16
@@ -156,14 +156,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3707b2d4d1b2d53f0800000000000000
-      internalID: -910524144810233741
+      spriteID: cda6d40b91095a570800000000000000
+      internalID: 8477340313601272540
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ballsoverlay1280_2
+      name: ghostballsoverlay_2
       rect:
         serializedVersion: 2
         x: 31
@@ -178,8 +178,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 985314560c8ee6a40800000000000000
-      internalID: 5363480119274976649
+      spriteID: 326a5a7b5901c3b40800000000000000
+      internalID: 5421226286664492579
       vertices: []
       indices: 
       edges: []
@@ -198,9 +198,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      ballsoverlay1280_0: -7180641765667264733
-      ballsoverlay1280_1: -910524144810233741
-      ballsoverlay1280_2: 5363480119274976649
+      ghostballsoverlay_0: 5396062740172690609
+      ghostballsoverlay_1: 8477340313601272540
+      ghostballsoverlay_2: 5421226286664492579
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

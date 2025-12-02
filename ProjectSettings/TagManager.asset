@@ -8,11 +8,12 @@ TagManager:
   - ball
   - brick
   - borderbottom
+  - shot
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Balls
   - Water
   - UI
   - 
@@ -56,6 +57,9 @@ TagManager:
     locked: 0
   - name: Balls
     uniqueID: 3205697569
+    locked: 0
+  - name: Shot
+    uniqueID: 4274291127
     locked: 0
   m_RenderingLayers:
   - Default

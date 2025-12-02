@@ -248,7 +248,10 @@ MonoBehaviour:
   - {r: 0.8117647, g: 0.011764706, b: 0, a: 1}
   effects:
   - {fileID: 21300000, guid: 444d091d9f53cbd49b93da9e8640acbc, type: 3}
-  - {fileID: 21300000, guid: 772bf7fd48062b84b91baff91d445699, type: 3}
+  - {fileID: 21300000, guid: 949211d7fe3a0e14b94af048d0251f1c, type: 3}
   - {fileID: 21300000, guid: 4cd5202681693294f8b93457f861cb4b, type: 3}
-  effectPercentChance: 17
+  ballPrefab: {fileID: 762913898396776977, guid: fd96cea1165d3ba4fb1ea5fb4c7fdd34, type: 3}
+  ghostBallPrefab: {fileID: 7639914911540520600, guid: 29470e4bcbdf2a34fb49f64d0c932145, type: 3}
+  shotPrefab: {fileID: 4342072923940461620, guid: 35b62af2173d22840b3f9e503488f330, type: 3}
+  effectPercentChance: 20
   overlay: {fileID: 3614714154646711965}

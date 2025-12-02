@@ -1,10 +1,11 @@
+using System.Collections;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviour {
     public float playerY;
-    public float lives;
     public GameObject ballPrefab;
 
     private Rigidbody2D rb;
@@ -13,6 +14,7 @@ public class PlayerManager : MonoBehaviour {
     private Vector3 mousePosition;
     private Vector3 targetPosition;
     private GameObject myBall;
+    private List<GameObject> ghostBalls;
     private float playerWidth;
     private float gameWidth;
     private float boundaryPos;
@@ -22,6 +24,7 @@ public class PlayerManager : MonoBehaviour {
         bc = GetComponent<BoxCollider2D>();
         gameWidth = 11.72f;
         playerWidth = bc.size.x;
+        ghostBalls = new List<GameObject>();
     }
 
     void Start() {
@@ -51,10 +54,18 @@ public class PlayerManager : MonoBehaviour {
             instantiateBall();
         }
 
-        if (Input.GetMouseButtonUp(0) && myBall != null) {
-            myBall.transform.SetParent(null, true);
-            myBall.GetComponent<BallManager>().setStart();
-            Debug.Log("called setstart");
+        if (Input.GetMouseButtonUp(0)) {
+            if (myBall != null && !myBall.GetComponent<BallManager>().hasStarted()) {
+                myBall.transform.SetParent(null, true);
+                myBall.GetComponent<BallManager>().setStart();
+                Debug.Log("called setstart for ball");
+            }
+            else if (myBall.GetComponent<BallManager>().hasStarted() && ghostBalls.Count > 0) {
+                GameObject ghostBall = ghostBalls[0];
+                ghostBall.transform.SetParent(null, true);
+                ghostBall.GetComponent<BallManager>().setStart();
+                ghostBalls.Remove(ghostBall);
+            }
         }
     }
 
@@ -62,6 +73,14 @@ public class PlayerManager : MonoBehaviour {
         myBall = Instantiate(ballPrefab);
         myBall.transform.position = new Vector2(rb.position.x, rb.position.y);
         myBall.transform.SetParent(this.gameObject.transform);
+    }
+
+    public void addGhostList(List<GameObject> balls) {
+        ghostBalls = balls;
+    }
+
+    public int ghostBallCount() {
+        return ghostBalls.Count;
     }
 
     public float getPlayerWidth() {
