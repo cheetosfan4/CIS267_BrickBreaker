@@ -4,31 +4,36 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour {
     public float playerY;
-    public float playerWidth;
-    public float borderWidth;
     public float lives;
     public GameObject ballPrefab;
 
     private Rigidbody2D rb;
+    private BoxCollider2D bc;
     private Vector3 mouseScreenPosition;
     private Vector3 mousePosition;
     private Vector3 targetPosition;
     private GameObject myBall;
+    private float playerWidth;
+    private float gameWidth;
+    private float boundaryPos;
+
+    void Awake() {
+        rb = GetComponent<Rigidbody2D>();
+        bc = GetComponent<BoxCollider2D>();
+        gameWidth = 11.72f;
+        playerWidth = bc.size.x;
+    }
 
     void Start() {
-        rb = GetComponent<Rigidbody2D>();
         targetPosition = new Vector3(0, playerY, 0);
         rb.position = targetPosition;
+        boundaryPos = (gameWidth/2) - (playerWidth / 2);
         instantiateBall();
     }
 
     void Update() {
         mouseScreenPosition = Input.mousePosition;
         mousePosition = Camera.main.ScreenToWorldPoint(mouseScreenPosition);
-        //12.8 is half the size of background, will not change
-        //might change border width or player width
-        //could also get player width from collision box when it is added
-        float boundaryPos = 12.8f - borderWidth - (playerWidth / 2);
 
         if (mousePosition.x > -boundaryPos && mousePosition.x < boundaryPos) {
             targetPosition.x = mousePosition.x;
@@ -55,7 +60,11 @@ public class PlayerManager : MonoBehaviour {
 
     private void instantiateBall() {
         myBall = Instantiate(ballPrefab);
-        myBall.transform.position = new Vector2(rb.position.x, rb.position.y + 0.7f);
+        myBall.transform.position = new Vector2(rb.position.x, rb.position.y);
         myBall.transform.SetParent(this.gameObject.transform);
+    }
+
+    public float getPlayerWidth() {
+        return playerWidth;
     }
 }
