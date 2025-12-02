@@ -54,8 +54,8 @@ public class PlayerManager : MonoBehaviour {
             instantiateBall();
         }
 
-        if (Input.GetMouseButtonUp(0)) {
-            if (myBall != null && !myBall.GetComponent<BallManager>().hasStarted()) {
+        if (Input.GetMouseButtonUp(0) && myBall != null) {
+            if (!myBall.GetComponent<BallManager>().hasStarted()) {
                 myBall.transform.SetParent(null, true);
                 myBall.GetComponent<BallManager>().setStart();
                 Debug.Log("called setstart for ball");
