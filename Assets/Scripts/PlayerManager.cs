@@ -54,7 +54,7 @@ public class PlayerManager : MonoBehaviour {
             instantiateBall();
         }
 
-        if (Input.GetMouseButtonUp(0) && myBall != null) {
+        if (Input.GetMouseButtonUp(0) && myBall != null && GameManager.instance.getShootPreventionTimer() <= 0) {
             if (!myBall.GetComponent<BallManager>().hasStarted()) {
                 myBall.transform.SetParent(null, true);
                 myBall.GetComponent<BallManager>().setStart();

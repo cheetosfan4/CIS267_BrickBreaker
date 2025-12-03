@@ -39,6 +39,7 @@ public class BrickManager : MonoBehaviour {
         level--;
         if (level < 0) {
             triggerEffect();
+            GameManager.instance.removeBrick(this.gameObject);
             Destroy(this.gameObject);
         }
         else {
