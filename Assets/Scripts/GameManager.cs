@@ -36,6 +36,8 @@ public class GameManager : MonoBehaviour {
         else {
             instance = this;
         }
+        DontDestroyOnLoad(this.gameObject);
+
         livesCounterText = livesCounter.GetComponentInChildren<TextMeshProUGUI>();
         scoreCounterText = scoreCounter.GetComponentInChildren<TextMeshProUGUI>();
         startButtonText = startButton.GetComponentInChildren<TextMeshProUGUI>();
@@ -95,6 +97,9 @@ public class GameManager : MonoBehaviour {
     public void exitGame() {
         if (gameLoaded) {
             SceneManager.LoadScene("MainMenu");
+            died = false;
+            won = false;
+            gamePaused = false;
             menuGUI.SetActive(true);
             livesCounter.SetActive(false);
             scoreCounter.SetActive(false);
@@ -210,5 +215,18 @@ public class GameManager : MonoBehaviour {
 
     public float getShootPreventionTimer() {
         return shootPreventionTimer;
+    }
+
+    public bool isPaused() {
+        return gamePaused;
+    }
+
+    public bool isOver() {
+        if (won || died) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }
