@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour {
     public static GameManager instance { get; private set; }
     public GameObject livesCounter;
     private TextMeshProUGUI livesCounterText;
+    public GameObject scoreCounter;
+    private TextMeshProUGUI scoreCounterText;
     public GameObject menuGUI;
     public GameObject startButton;
     private TextMeshProUGUI startButtonText;
@@ -35,6 +37,7 @@ public class GameManager : MonoBehaviour {
             instance = this;
         }
         livesCounterText = livesCounter.GetComponentInChildren<TextMeshProUGUI>();
+        scoreCounterText = scoreCounter.GetComponentInChildren<TextMeshProUGUI>();
         startButtonText = startButton.GetComponentInChildren<TextMeshProUGUI>();
         exitButtonText = exitButton.GetComponentInChildren<TextMeshProUGUI>();
         gameStatusText = gameStatus.GetComponentInChildren<TextMeshProUGUI>();
@@ -42,6 +45,7 @@ public class GameManager : MonoBehaviour {
         brickList = new List<GameObject>();
 
         livesCounter.SetActive(false);
+        scoreCounter.SetActive(false);
         gameStatus.SetActive(false);
         gameLoaded = false;
         gamePaused = false;
@@ -65,11 +69,13 @@ public class GameManager : MonoBehaviour {
             SceneManager.LoadScene("Gameplay");
             menuGUI.SetActive(false);
             livesCounter.SetActive(true);
+            scoreCounter.SetActive(true);
             died = false;
             won = false;
             lives = 3;
-            updateLivesCounter();
             score = 0;
+            updateLivesCounter();
+            updateScoreCounter();
             Time.timeScale = 1;
             gameLoaded = true;
             gamePaused = false;
@@ -78,6 +84,7 @@ public class GameManager : MonoBehaviour {
         else if (gamePaused) {
             menuGUI.SetActive(false);
             livesCounter.SetActive(true);
+            scoreCounter.SetActive(true);
             gameStatus.SetActive(true);
             Time.timeScale = 1;
             shootPreventionTimer = 0.1f;
@@ -90,6 +97,7 @@ public class GameManager : MonoBehaviour {
             SceneManager.LoadScene("MainMenu");
             menuGUI.SetActive(true);
             livesCounter.SetActive(false);
+            scoreCounter.SetActive(false);
             gameStatus.SetActive(false);
             gameLoaded = false;
             bricksLoaded = false;
@@ -104,14 +112,16 @@ public class GameManager : MonoBehaviour {
     public void debugMode() {
         menuGUI.SetActive(false);
         livesCounter.SetActive(true);
+        scoreCounter.SetActive(true);
         gameLoaded = true;
         gamePaused = false;
         bricksLoaded = false;
         died = false;
         won = false;
         lives = 3;
-        updateLivesCounter();
         score = 0;
+        updateLivesCounter();
+        updateScoreCounter();
     }
 
     private void detectPause() {
@@ -128,6 +138,7 @@ public class GameManager : MonoBehaviour {
             else {
                 menuGUI.SetActive(false);
                 livesCounter.SetActive(true);
+                scoreCounter.SetActive(true);
                 Time.timeScale = 1;
                 gamePaused = false;
             }
@@ -159,13 +170,13 @@ public class GameManager : MonoBehaviour {
 
     public void decrementLives() {
         lives--;
+        updateScore(-25);
         if (lives <= 0) {
             died = true;
         }
         if (lives >= 0) {
             updateLivesCounter();
         }
-
     }
 
     private void loadBricks() {
@@ -188,8 +199,13 @@ public class GameManager : MonoBehaviour {
         livesCounterText.text = "Lives: " + lives;
     }
 
-    public void increaseScore(int amount) {
+    public void updateScoreCounter() {
+        scoreCounterText.text = "Score: " + score;
+    }
+
+    public void updateScore(int amount) {
         score += amount;
+        updateScoreCounter();
     }
 
     public float getShootPreventionTimer() {

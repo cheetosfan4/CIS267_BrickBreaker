@@ -39,11 +39,13 @@ public class BrickManager : MonoBehaviour {
         level--;
         if (level < 0) {
             triggerEffect();
+            GameManager.instance.updateScore(25);
             GameManager.instance.removeBrick(this.gameObject);
             Destroy(this.gameObject);
         }
         else {
             sr.color = varieties[level];
+            GameManager.instance.updateScore(10);
         }
     }
 
@@ -58,7 +60,11 @@ public class BrickManager : MonoBehaviour {
                         
                         //sets the angle for the ghost ball to be the same as its original ball
                         //but, the x value is flipped so the new ball doesn't just overlap with the old one
+                        //additionally makes sure that the ghost ball diverges if the original ball is going straight up
                         Vector2 newAngle = balls[i].GetComponent<BallManager>().getAngle();
+                        if (Mathf.Abs(newAngle.x) < 0.2f) {
+                            newAngle.x += 0.2f;
+                        }
                         newAngle.x = -newAngle.x;
                         ghostBall.GetComponent<BallManager>().setAngle(newAngle);
                         ghostBall.GetComponent<BallManager>().setStart();
