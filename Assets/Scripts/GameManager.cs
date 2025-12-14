@@ -1,3 +1,9 @@
+//====================================================================================================
+//Author        :       Marc McLennan
+//Date          :       12-14-2025
+//Description   :       CIS267 Homework #2; Brick Breaker
+//====================================================================================================
+
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using TMPro;
