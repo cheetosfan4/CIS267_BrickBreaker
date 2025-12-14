@@ -1,3 +1,9 @@
+//====================================================================================================
+//Author        :       Marc McLennan
+//Date          :       12-14-2025
+//Description   :       CIS267 Homework #2; Brick Breaker
+//====================================================================================================
+
 using System.Data;
 using UnityEngine;
 
@@ -10,6 +16,7 @@ public class BallManager : MonoBehaviour {
     private Rigidbody2D rb;
     private SpriteRenderer sr;
     private float ghostDistance;
+    private float collisionCooldown;
 
     void Awake() {
         sr = GetComponentInChildren<SpriteRenderer>();
@@ -18,6 +25,7 @@ public class BallManager : MonoBehaviour {
         angle.y = 1;
         started = false;
         ghostDistance = 0;
+        collisionCooldown = 0;
     }
 
     private void Start() {
@@ -30,6 +38,10 @@ public class BallManager : MonoBehaviour {
         }
         else {
             rb.position = new Vector2(transform.parent.position.x + ghostDistance, transform.parent.position.y + ballHoldDistance);
+        }
+       
+        if (collisionCooldown > 0) {
+            collisionCooldown -= Time.deltaTime;
         }
     }
 
@@ -58,7 +70,10 @@ public class BallManager : MonoBehaviour {
         if (started) {
             Vector2 normal = collision.GetContact(0).normal;
             //reflects ball off of the borders
-            angle = Vector2.Reflect(angle, normal);
+            if (collisionCooldown <= 0) {
+                angle = Vector2.Reflect(angle, normal);
+                collisionCooldown = 0.05f;
+            }
 
             if (collision.gameObject.CompareTag("Player")) {
                 PlayerManager player = collision.gameObject.GetComponent<PlayerManager>();

@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour {
     public GameObject gameStatus;
     private TextMeshProUGUI gameStatusText;
     public int lives;
+    public GameObject title;
+    public GameObject[] layouts;
 
     private bool gameLoaded;
     private bool gamePaused;
@@ -49,6 +51,7 @@ public class GameManager : MonoBehaviour {
         livesCounter.SetActive(false);
         scoreCounter.SetActive(false);
         gameStatus.SetActive(false);
+        title.SetActive(true);
         gameLoaded = false;
         gamePaused = false;
         bricksLoaded = false;
@@ -56,6 +59,18 @@ public class GameManager : MonoBehaviour {
         died = false;
         won = false;
         lives = 3;
+    }
+
+    private void OnEnable() {
+        SceneManager.sceneLoaded += onSceneLoaded;
+    }
+    private void OnDisable() {
+        SceneManager.sceneLoaded -= onSceneLoaded;
+    }
+    private void onSceneLoaded(Scene scene, LoadSceneMode mode) {
+        if (scene.name == "Gameplay") {
+            spawnLevel();
+        }
     }
 
     private void Update() {
@@ -72,6 +87,7 @@ public class GameManager : MonoBehaviour {
             menuGUI.SetActive(false);
             livesCounter.SetActive(true);
             scoreCounter.SetActive(true);
+            title.SetActive(false);
             died = false;
             won = false;
             lives = 3;
@@ -88,6 +104,7 @@ public class GameManager : MonoBehaviour {
             livesCounter.SetActive(true);
             scoreCounter.SetActive(true);
             gameStatus.SetActive(true);
+            title.SetActive(false);
             Time.timeScale = 1;
             shootPreventionTimer = 0.1f;
             gamePaused = false;
@@ -104,6 +121,7 @@ public class GameManager : MonoBehaviour {
             livesCounter.SetActive(false);
             scoreCounter.SetActive(false);
             gameStatus.SetActive(false);
+            title.SetActive(true);
             gameLoaded = false;
             bricksLoaded = false;
             startButtonText.text = "Start";
@@ -115,9 +133,11 @@ public class GameManager : MonoBehaviour {
     }
 
     public void debugMode() {
+        spawnLevel();
         menuGUI.SetActive(false);
         livesCounter.SetActive(true);
         scoreCounter.SetActive(true);
+        title.SetActive(false);
         gameLoaded = true;
         gamePaused = false;
         bricksLoaded = false;
@@ -127,6 +147,13 @@ public class GameManager : MonoBehaviour {
         score = 0;
         updateLivesCounter();
         updateScoreCounter();
+    }
+
+    private void spawnLevel() {
+        //spawns random level
+        int random = Random.Range(0, layouts.Length);
+        GameObject layout = Instantiate(layouts[random]);
+        layout.transform.position = Vector2.zero;
     }
 
     private void detectPause() {
